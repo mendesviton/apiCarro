@@ -1,4 +1,3 @@
-const { getById } = require('../controllers/CarroController');
 const  db = require('../db');
 
 module.exports = {
