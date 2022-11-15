@@ -5,7 +5,8 @@ module.exports = {
         return new Promise((accept,denied)=>{
             db.query('SELECT * FROM carros',(error,results)=>{
                 if (error) {
-                    denied(error); return;
+                    denied(error);
+                     return;
                 }accept(results);
             })
         })
@@ -24,5 +25,44 @@ module.exports = {
             })
 
         })
+    },
+    insert: (modelo,placa)=> {
+        return new Promise((accept,denied)=>{
+            db.query('INSERT INTO carros (modelo,placa) VALUES (?, ?)',
+            [modelo,placa],
+            (error,results)=>{
+                if (error) {
+                    denied(error); return;
+                }
+                accept(results.insertId)
+                
+            })
+
+        })
+    },
+    update: (codigo,modelo,placa)=> {
+        return new Promise((accept,denied)=>{
+            db.query('UPDATE carros SET modelo = ?, placa =? where codigo = ?',
+            [modelo,placa,codigo],
+            (error,results)=>{
+                if (error) {
+                    denied(error); return;
+                }
+                accept(results.insertId)
+                
+            })
+
+        })
+    },
+    delete:(id) => {
+     return new Promise((accept,denied)=>{
+        db.query('DELETE FROM carros WHERE codigo=? ',[id],
+        (error,results)=>{
+            if(error){
+                denied(error);return;
+            }
+            accept(results)
+        })
+     })
     } 
 };
